@@ -6,6 +6,8 @@ import com.imooc.service.UserService;
 import com.imooc.utils.CookieUtils;
 import com.imooc.utils.JSONResult;
 import com.imooc.utils.JsonUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+@Api(value = "注册登录", tags = {"用于注册登录的相关接口"})//tags分组
 @RestController
 @RequestMapping("passport")
 public class PassportController {
@@ -21,7 +23,7 @@ public class PassportController {
     @Autowired
     private UserService userService;
 
-
+    @ApiOperation(value = "用户名是否存在", notes = "用户名是否存在", httpMethod = "GET")//notes说明
     @GetMapping("/usernameIsExist")
     public JSONResult usernameIsExist(@RequestParam String username) {
 
@@ -40,7 +42,7 @@ public class PassportController {
         return JSONResult.ok();
     }
 
-
+    @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
     @PostMapping("/regist")
     public JSONResult regist(@RequestBody UserBO userBO,
                                   HttpServletRequest request,
