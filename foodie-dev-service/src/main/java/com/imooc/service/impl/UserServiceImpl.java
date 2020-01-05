@@ -19,7 +19,8 @@ import java.util.Date;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static final String USER_FACE = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";;
+    private static final String USER_FACE = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";
+    ;
     @Autowired
     public UsersMapper usersMapper;
 
@@ -69,5 +70,20 @@ public class UserServiceImpl implements UserService {
         usersMapper.insert(user);
 
         return user;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public Users queryUserForLogin(String username, String password) {
+
+        Example userExample = new Example(Users.class);
+        Example.Criteria userCriteria = userExample.createCriteria();
+
+        userCriteria.andEqualTo("username", username);
+        userCriteria.andEqualTo("password", password);
+
+        Users result = usersMapper.selectOneByExample(userExample);
+
+        return result;
     }
 }
